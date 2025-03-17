@@ -43,7 +43,7 @@ function doNumberButtonAction(event) {
 }
 
 function doOperatorButtonAction(event) {
-    if (operation != "None") {
+    if (operation != "equals") {
         displayElem.innerHTML = operate(operation, firstArgument, Number(displayElem.innerHTML));
     }
     firstArgument = Number(displayElem.innerHTML);
@@ -52,13 +52,25 @@ function doOperatorButtonAction(event) {
 }
 
 let firstArgument = 0;
-let operation = "None"
-let secondArgument = 0;
+let operation = "equals"
 let isNewNumber = false;
 
 const displayElem = document.querySelector(".display");
 const numberButtons = document.querySelectorAll(".number");
 const operatorButtons = document.querySelectorAll(".operator");
+const clearButton = document.getElementById("clear");
+const allClearButton = document.getElementById("all-clear");
+
+clearButton.addEventListener("click", () => {
+    displayElem.innerHTML = "0";
+});
+
+allClearButton.addEventListener("click", () => {
+    displayElem.innerHTML = "0";
+    firstArgument = "0";
+    operation = "equals";
+    isNewNumber = false;
+});
 
 for (const button of operatorButtons) {
     button.addEventListener("click", event => doOperatorButtonAction(event));
