@@ -1,0 +1,15 @@
+* {
+    padding: 0;
+    margin: 0;
+}
+
+button {
+    box-sizing: border-box;
+    padding: 5px 10px;
+    margin: 2px 1px;
+    width: 50px;
+}
+
+#equals {
+    width: 106px;
+}
