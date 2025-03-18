@@ -14,6 +14,16 @@ function divide(a, b) {
     return a / b;
 }
 
+function roundToNCharacters(num, totalNumCharacters) {
+    let numDigitsBeforeDecimal = Math.abs(num) > 10
+        ? Math.floor(Math.log10(Math.abs(num))) + 1
+        : 1;
+    let numDigitsAfterDecimal = num < 0
+        ? Math.max(0, totalNumCharacters - numDigitsBeforeDecimal - 2)
+        : Math.max(0, totalNumCharacters - numDigitsBeforeDecimal - 1);
+    return Number(num.toFixed(numDigitsAfterDecimal));
+}
+
 function operate(operation, a, b) {
     if (operation == "add") {
         return add(a, b);
@@ -39,8 +49,7 @@ function updateDisplay(displayText) {
         displayElem.innerHTML = "OVERFLOW";
         return;
     }
-    const displayString = String(displayText);
-    displayElem.innerHTML = Number(displayString.slice(0, 11));
+    displayElem.innerHTML = roundToNCharacters(Number(displayText), 11);
 }
 
 function doNumberButtonAction(event) {
@@ -52,7 +61,9 @@ function doNumberButtonAction(event) {
         displayString = "0";
         isNewNumber = false;
     }
-    displayString = String(Number(displayString + event.target.value));
+    if (displayString.length < 11) {
+        displayString = String(Number(displayString + event.target.value));
+    }
     updateDisplay(displayString);
 }
 
