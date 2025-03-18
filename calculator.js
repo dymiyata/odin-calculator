@@ -43,13 +43,13 @@ function doNumberButtonAction(event) {
 }
 
 function doOperatorButtonAction(event) {
-    if (operation != "equals") {
+    if (operation != "equals" && !isNewNumber) {
         const result = operate(operation, firstArgument, Number(displayElem.innerHTML));
         if (isNaN(result)) {
             displayElem.innerHTML = "Nice try";
         }
         else {
-            displayElem.innerHTML = operate(operation, firstArgument, Number(displayElem.innerHTML));
+            displayElem.innerHTML = result;
         }
 
     }
@@ -59,6 +59,7 @@ function doOperatorButtonAction(event) {
 }
 
 let firstArgument = 0;
+let secondArgument = "none";
 let operation = "equals"
 let isNewNumber = false;
 
