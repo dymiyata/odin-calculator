@@ -44,7 +44,14 @@ function doNumberButtonAction(event) {
 
 function doOperatorButtonAction(event) {
     if (operation != "equals") {
-        displayElem.innerHTML = operate(operation, firstArgument, Number(displayElem.innerHTML));
+        const result = operate(operation, firstArgument, Number(displayElem.innerHTML));
+        if (isNaN(result)) {
+            displayElem.innerHTML = "Nice try";
+        }
+        else {
+            displayElem.innerHTML = operate(operation, firstArgument, Number(displayElem.innerHTML));
+        }
+
     }
     firstArgument = Number(displayElem.innerHTML);
     operation = event.target.id;
