@@ -11,9 +11,6 @@ function multiply(a, b) {
 }
 
 function divide(a, b) {
-    if (b == 0) {
-        return NaN;
-    }
     return a / b;
 }
 
@@ -32,26 +29,37 @@ function operate(operation, a, b) {
     }
 }
 
+function updateDisplay(displayText) {
+    if (displayText == Infinity) {
+        displayElem.innerHTML = "Nice Try";
+        return;
+    }
+    const isTooBig = Number(displayText) >= 10 ** 11;
+    if (isTooBig) {
+        displayElem.innerHTML = "OVERFLOW";
+        return;
+    }
+    const displayString = String(displayText);
+    displayElem.innerHTML = Number(displayString.slice(0, 11));
+}
+
 function doNumberButtonAction(event) {
-    let stringToDisplay = displayElem.innerHTML;
+    let displayString = displayElem.innerHTML;
+    if (isNaN(displayString)) {
+        return;
+    }
     if (isNewNumber) {
-        stringToDisplay = "0";
+        displayString = "0";
         isNewNumber = false;
     }
-    stringToDisplay = String(Number(stringToDisplay + event.target.value));
-    displayElem.innerHTML = stringToDisplay;
+    displayString = String(Number(displayString + event.target.value));
+    updateDisplay(displayString);
 }
 
 function doOperatorButtonAction(event) {
     if (operation != "equals" && !isNewNumber) {
         const result = operate(operation, firstArgument, Number(displayElem.innerHTML));
-        if (isNaN(result)) {
-            displayElem.innerHTML = "Nice try";
-        }
-        else {
-            displayElem.innerHTML = result;
-        }
-
+        updateDisplay(result);
     }
     firstArgument = Number(displayElem.innerHTML);
     operation = event.target.id;
@@ -70,11 +78,14 @@ const clearButton = document.getElementById("clear");
 const allClearButton = document.getElementById("all-clear");
 
 clearButton.addEventListener("click", () => {
-    displayElem.innerHTML = "0";
+    if (isNaN(displayElem.innerHTML)) {
+        return;
+    }
+    updateDisplay(0);
 });
 
 allClearButton.addEventListener("click", () => {
-    displayElem.innerHTML = "0";
+    updateDisplay(0);
     firstArgument = "0";
     operation = "equals";
     isNewNumber = false;
