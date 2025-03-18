@@ -46,16 +46,13 @@ button {
     height: 75px;
 }
 
-#equals {
-    width: 195px;
-}
-
 #delete {
     background-color: #cc241d;
 }
 
 .number,
-#decimal {
+#decimal,
+#negative {
     color: black;
     background-color: #c6bca8;
 }

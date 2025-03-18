@@ -44,24 +44,24 @@ function updateDisplay(displayText) {
         displayElem.innerHTML = "Nice Try";
         return;
     }
-    const isTooBig = Number(displayText) >= 10 ** 11;
+    const isTooBig = Math.abs(Number(displayText)) >= 10 ** 10;
     if (isTooBig) {
         displayElem.innerHTML = "OVERFLOW";
         return;
     }
-    displayElem.innerHTML = roundToNCharacters(Number(displayText), 11);
+    displayElem.innerHTML = roundToNCharacters(Number(displayText), 10);
 }
 
 function doNumberButtonAction(event) {
     let displayString = displayElem.innerHTML;
-    if (isNaN(displayString)) {
-        return;
-    }
     if (isNewNumber) {
         displayString = "0";
         isNewNumber = false;
     }
-    if (displayString.length < 11) {
+    if (isNaN(displayString)) {
+        return;
+    }
+    if (displayString.length < 10) {
         displayString = String(Number(displayString + event.target.value));
     }
     updateDisplay(displayString);
@@ -88,6 +88,15 @@ const operatorButtons = document.querySelectorAll(".operator");
 const clearButton = document.getElementById("clear");
 const allClearButton = document.getElementById("all-clear");
 const decimalButton = document.getElementById("decimal");
+const negativeButton = document.getElementById("negative");
+
+negativeButton.addEventListener("click", (event) => {
+    let displayString = displayElem.innerHTML;
+    if (isNaN(displayString)) {
+        return;
+    }
+    updateDisplay(-1 * Number(displayString));
+});
 
 decimalButton.addEventListener("click", (event) => {
     let displayString = displayElem.innerHTML;
