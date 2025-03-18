@@ -87,6 +87,22 @@ const numberButtons = document.querySelectorAll(".number");
 const operatorButtons = document.querySelectorAll(".operator");
 const clearButton = document.getElementById("clear");
 const allClearButton = document.getElementById("all-clear");
+const decimalButton = document.getElementById("decimal");
+
+decimalButton.addEventListener("click", (event) => {
+    let displayString = displayElem.innerHTML;
+    if (isNewNumber) {
+        displayString = "0";
+        isNewNumber = false;
+    }
+    if (displayString.length < 11) {
+        displayString = displayString + event.target.value;
+    }
+    if (isNaN(displayString)) {
+        return;
+    }
+    displayElem.innerHTML = displayString;
+});
 
 clearButton.addEventListener("click", () => {
     if (isNaN(displayElem.innerHTML)) {
