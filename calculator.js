@@ -14,6 +14,10 @@ function divide(a, b) {
     return a / b;
 }
 
+function sqrt(a) {
+    return a ** (1 / 2);
+}
+
 function roundToNCharacters(num, totalNumCharacters) {
     let numDigitsBeforeDecimal = Math.abs(num) > 10
         ? Math.floor(Math.log10(Math.abs(num))) + 1
@@ -42,6 +46,10 @@ function operate(operation, a, b) {
 function updateDisplay(displayText) {
     if (displayText == Infinity) {
         displayElem.innerHTML = "Nice Try";
+        return;
+    }
+    if (isNaN(displayText)) {
+        displayElem.innerHTML = "Not Real";
         return;
     }
     const isTooBig = Math.abs(Number(displayText)) >= 10 ** 10;
@@ -89,6 +97,14 @@ const clearButton = document.getElementById("clear");
 const allClearButton = document.getElementById("all-clear");
 const decimalButton = document.getElementById("decimal");
 const negativeButton = document.getElementById("negative");
+const sqrtButton = document.getElementById("sqrt");
+
+sqrtButton.addEventListener("click", () => {
+    let input = Number(displayElem.innerHTML);
+    updateDisplay(sqrt(input));
+    firstArgument = Number(displayElem.innerHTML);
+    isNewNumber = true;
+});
 
 negativeButton.addEventListener("click", (event) => {
     let displayString = displayElem.innerHTML;
@@ -111,13 +127,6 @@ decimalButton.addEventListener("click", (event) => {
         return;
     }
     displayElem.innerHTML = displayString;
-});
-
-clearButton.addEventListener("click", () => {
-    if (isNaN(displayElem.innerHTML)) {
-        return;
-    }
-    updateDisplay(0);
 });
 
 allClearButton.addEventListener("click", () => {
