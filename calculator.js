@@ -85,6 +85,13 @@ function doOperatorButtonAction(event) {
     isNewNumber = true;
 }
 
+function deleteLastDigit(inputString) {
+    if (isNaN(inputString)) {
+        return inputString;
+    }
+    return String(Number(inputString.slice(0, -1)));
+}
+
 let firstArgument = 0;
 let secondArgument = "none";
 let operation = "equals"
@@ -98,6 +105,15 @@ const allClearButton = document.getElementById("all-clear");
 const decimalButton = document.getElementById("decimal");
 const negativeButton = document.getElementById("negative");
 const sqrtButton = document.getElementById("sqrt");
+const deleteButton = document.getElementById("delete");
+
+deleteButton.addEventListener("click", () => {
+    if (isNewNumber) {
+        return;
+    }
+    let newText = deleteLastDigit(displayElem.innerHTML);
+    updateDisplay(newText);
+});
 
 sqrtButton.addEventListener("click", () => {
     let input = Number(displayElem.innerHTML);
